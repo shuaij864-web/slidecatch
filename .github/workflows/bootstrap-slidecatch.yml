@@ -3,7 +3,7 @@ name: Bootstrap SlideCatch Repository
 on:
   push:
     paths:
-      - 'bootstrap/slidecatch-v0.1.0.git.bundle.b64'
+      - 'bootstrap/READY'
   workflow_dispatch:
 
 permissions:
@@ -16,6 +16,7 @@ jobs:
     timeout-minutes: 15
     env:
       EXPECTED_MAIN: 2f25a8d6cf1b64b97350364cb3b0e0d711988068
+      EXPECTED_BUNDLE_SHA256: a8e9530bc8a0901d2973a1923dbd2794b59d72cdbd64cb66da0f55d37bc8dd0b
       RELEASE_TAG: v0.1.0
     steps:
       - name: Checkout bootstrap branch
@@ -23,11 +24,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Decode and validate Git bundle
+      - name: Reassemble, decode and validate Git bundle
         shell: bash
         run: |
           set -euo pipefail
-          base64 --decode bootstrap/slidecatch-v0.1.0.git.bundle.b64 > /tmp/slidecatch.git.bundle
+          cat bootstrap/bundle.part.*.b64 | base64 --decode > /tmp/slidecatch.git.bundle
+          echo "${EXPECTED_BUNDLE_SHA256}  /tmp/slidecatch.git.bundle" | sha256sum -c -
           rm -rf /tmp/slidecatch-original
           git clone /tmp/slidecatch.git.bundle /tmp/slidecatch-original
           cd /tmp/slidecatch-original
