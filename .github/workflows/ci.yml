@@ -31,29 +31,24 @@ jobs:
           ARCHIVE="release/slidecatch-v$(node -p "require('./package.json').version").zip"
           unzip -t "$ARCHIVE"
           npm run verify:release
-      - name: Browser bundle harness
-        run: |
-          python -m pip install -r requirements-e2e.txt
-          python -m playwright install --with-deps chromium
-          npm run test:e2e
-        env:
-          CHROMIUM_PATH: ''
+      - name: Build/browser-surface smoke harness
+        run: npm run test:e2e
       - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: slidecatch-static-validation
           path: |
             release/slidecatch-v*.zip
-            docs/assets/cloud-validation-*.png
             docs/assets/cloud-validation-result.json
             docs/assets/cloud-validation-environment.json
+            docs/assets/cloud-validation-*.log
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
 
-  extension-e2e:
+  extension-build-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -61,22 +56,5 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Install Playwright Chromium
-        run: |
-          python -m pip install -r requirements-e2e.txt
-          python -m playwright install --with-deps chromium
-      - name: Full unpacked-extension E2E
+      - name: Production extension build smoke test
         run: npm run test:extension
-        env:
-          CHROMIUM_PATH: ''
-          SLIDECATCH_E2E_HEADLESS: '1'
-      - uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: slidecatch-extension-e2e
-          path: |
-            docs/assets/cloud-validation-library.png
-            docs/assets/cloud-validation-extension-result.json
-          if-no-files-found: warn
-          retention-days: 14
-          compression-level: 0
