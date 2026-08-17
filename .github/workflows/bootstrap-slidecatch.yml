@@ -1,0 +1,101 @@
+name: Bootstrap SlideCatch Repository
+
+on:
+  push:
+    paths:
+      - 'bootstrap/slidecatch-v0.1.0.git.bundle.b64'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  restore-original-repository:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      EXPECTED_MAIN: 2f25a8d6cf1b64b97350364cb3b0e0d711988068
+      RELEASE_TAG: v0.1.0
+    steps:
+      - name: Checkout bootstrap branch
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Decode and validate Git bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 --decode bootstrap/slidecatch-v0.1.0.git.bundle.b64 > /tmp/slidecatch.git.bundle
+          rm -rf /tmp/slidecatch-original
+          git clone /tmp/slidecatch.git.bundle /tmp/slidecatch-original
+          cd /tmp/slidecatch-original
+          git fsck --full
+          ACTUAL_MAIN="$(git rev-parse main)"
+          TAG_TARGET="$(git rev-list -n 1 "$RELEASE_TAG")"
+          echo "Bundle main: $ACTUAL_MAIN"
+          echo "Tag target:  $TAG_TARGET"
+          test "$ACTUAL_MAIN" = "$EXPECTED_MAIN"
+          test "$TAG_TARGET" = "$EXPECTED_MAIN"
+
+      - name: Restore exact original main and v0.1.0 tag
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd /tmp/slidecatch-original
+          git remote remove origin || true
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force-with-lease="refs/heads/main:${GITHUB_SHA}" origin main:main
+          git push origin "refs/tags/${RELEASE_TAG}:refs/tags/${RELEASE_TAG}"
+
+      - name: Verify restored branch through GitHub API
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5; do
+            REMOTE_MAIN="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/main" --jq '.object.sha' 2>/dev/null || true)"
+            if [ "$REMOTE_MAIN" = "$EXPECTED_MAIN" ]; then
+              echo "Remote main verified: $REMOTE_MAIN"
+              exit 0
+            fi
+            echo "Waiting for branch propagation ($i/5), current: ${REMOTE_MAIN:-none}"
+            sleep 3
+          done
+          echo "Remote main did not reach expected commit."
+          exit 1
+
+      - name: Dispatch CI and release workflows
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sleep 3
+          dispatch() {
+            local workflow="$1"
+            shift
+            for i in 1 2 3 4 5; do
+              if gh workflow run "$workflow" --repo "$GITHUB_REPOSITORY" "$@"; then
+                echo "Dispatched $workflow"
+                return 0
+              fi
+              echo "Retrying dispatch of $workflow ($i/5)"
+              sleep 4
+            done
+            return 1
+          }
+          dispatch ci.yml --ref main
+          dispatch release.yml --ref main -f tag="$RELEASE_TAG"
+
+      - name: Summary
+        shell: bash
+        run: |
+          echo "SlideCatch original repository restored."
+          echo "main=${EXPECTED_MAIN}"
+          echo "tag=${RELEASE_TAG}"
+          echo "CI and Release workflows dispatched."
