@@ -1,6 +1,6 @@
 <div align="center">
   <img src="src/assets/icons/icon128.png" width="96" height="96" alt="SlideCatch 图标">
-  <h1>SlideCatch｜课件捕手</h1>
+  <h1>SlideCatch｜课件捕手（雨课堂ppt下载神器）</h1>
   <p><strong>本地优先、显式授权、实时收集网页中已经加载的课件图片。</strong></p>
   <p>
     <a href="README.md">English</a> ·
