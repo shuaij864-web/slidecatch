@@ -45,11 +45,21 @@ SlideCatch 用于监听页面中**已经由浏览器实际加载**的课件图�
 
 ## 安装
 
-1. 下载 Release ZIP 并解压，或在源码目录运行 `npm run build`。
-2. Chrome 打开 `chrome://extensions/`。
-3. 开启右上角“开发者模式”。
-4. 点击“加载已解压的扩展程序”，选择解压目录或本仓库的 `dist/`。
-5. 可按需固定扩展图标。
+在第一个带 Tag 的 GitHub Release 发布前，直接从公开仓库构建：
+
+```bash
+git clone https://github.com/shuaij864-web/slidecatch.git
+cd slidecatch
+npm ci
+npm run build
+```
+
+然后：
+
+1. Chrome 打开 `chrome://extensions/`。
+2. 开启右上角“开发者模式”。
+3. 点击“加载已解压的扩展程序”，选择本仓库生成的 `dist/` 目录。
+4. 可按需固定扩展图标。
 
 生产版安装时**不直接获取任何网站权限**。首次使用时，在目标课件页面点击 SlideCatch →“在此网站启用”。Chrome 只会询问当前平台所需域名。若课件图片来自另一个 CDN，插件会列出资源域名并再次要求显式授权。
 
@@ -105,24 +115,17 @@ npm run verify:release
 
 ```text
 dist/                         可加载的生产版扩展目录
-release/slidecatch-v0.1.0.zip 发布 ZIP
+release/slidecatch-v0.1.0.zip 本地生成的发布 ZIP
 ```
 
-真实 Chromium 的内容脚本与弹窗验证：
+另外提供两个烟雾测试入口：
 
 ```bash
-npm run test:e2e
+npm run test:e2e        # 生成后的浏览器侧 Bundle / 构建烟雾测试
+npm run test:extension  # 生产扩展构建烟雾测试
 ```
 
-在常规 CI 环境进行完整“加载未打包扩展”测试：
-
-```bash
-python -m pip install playwright==1.57.0
-python -m playwright install --with-deps chromium
-npm run test:extension
-```
-
-当前云端验证结果与限制见 [docs/CLOUD_VALIDATION.md](docs/CLOUD_VALIDATION.md) 和 [VALIDATION_REPORT.md](VALIDATION_REPORT.md)。
+公开 `main` 分支由 GitHub 托管的 Ubuntu Runner 自动执行 CI 与 CodeQL。当前公开分支的自动测试**不宣称**已经覆盖“带真实登录态的教学平台端到端流程”或“完整未打包扩展生命周期”；平台级验收仍应在有授权的真实 Chrome 环境进行。早期发布前浏览器验证证据及其边界保留在 [docs/CLOUD_VALIDATION.md](docs/CLOUD_VALIDATION.md) 和 [VALIDATION_REPORT.md](VALIDATION_REPORT.md)。
 
 ## 架构
 
