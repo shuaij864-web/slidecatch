@@ -45,11 +45,21 @@ It is not a crawler, DRM bypass, login bypass, or hidden-page enumerator.
 
 ## Install an unpacked build
 
-1. Download a release ZIP and extract it, or run `npm run build` from source.
-2. Open `chrome://extensions/`.
-3. Enable **Developer mode**.
-4. Select **Load unpacked** and choose the extracted release folder or this repository's `dist/` folder.
-5. Pin SlideCatch if desired.
+Until the first tagged GitHub Release is published, build the extension directly from the public repository:
+
+```bash
+git clone https://github.com/shuaij864-web/slidecatch.git
+cd slidecatch
+npm ci
+npm run build
+```
+
+Then:
+
+1. Open `chrome://extensions/`.
+2. Enable **Developer mode**.
+3. Select **Load unpacked** and choose this repository's generated `dist/` folder.
+4. Pin SlideCatch if desired.
 
 The production manifest requests no mandatory website access. On first use, click the extension and choose **Enable on this site**. Chrome then asks for only the relevant host patterns. If slide images arrive from a separate CDN, SlideCatch lists those resource hosts and asks for a second explicit permission.
 
@@ -87,13 +97,12 @@ The production extension declares:
 
 Clearing a session or deleting the extension removes data under the normal browser storage lifecycle. See [PRIVACY.md](PRIVACY.md).
 
-## Development
+## Development and validation
 
 Requirements:
 
 - Node.js 20 or newer.
 - Chrome or Chromium 120 or newer for manual testing.
-- Python Playwright only for the optional full browser-extension test.
 
 The build is deliberately zero-dependency: the repository includes a small deterministic ES-module bundler and ZIP writer.
 
@@ -111,24 +120,17 @@ Outputs:
 
 ```text
 dist/                         unpacked production extension
-release/slidecatch-v0.1.0.zip installable release archive
+release/slidecatch-v0.1.0.zip locally generated release archive
 ```
 
-For a policy-compatible real-Chromium bundle/UI harness:
+Two additional smoke commands are available:
 
 ```bash
-npm run test:e2e
+npm run test:e2e        # generated browser-facing bundle/build smoke
+npm run test:extension  # production extension build smoke
 ```
 
-For a full unpacked-extension test on a normal CI runner with Playwright Chromium installed:
-
-```bash
-python -m pip install playwright==1.57.0
-python -m playwright install --with-deps chromium
-npm run test:extension
-```
-
-See [docs/testing.md](docs/testing.md), the checked-in [cloud validation record](docs/CLOUD_VALIDATION.md), and [VALIDATION_REPORT.md](VALIDATION_REPORT.md).
+The public `main` branch is checked on GitHub-hosted Ubuntu runners by CI and CodeQL. The automated public-branch checks intentionally do **not** claim a complete authenticated learning-platform or unpacked-extension browser lifecycle. A real authorized Chrome smoke test remains required for platform-specific acceptance. Earlier pre-publication browser evidence and its limitations are retained in [docs/CLOUD_VALIDATION.md](docs/CLOUD_VALIDATION.md) and [VALIDATION_REPORT.md](VALIDATION_REPORT.md).
 
 ## Provider architecture
 
