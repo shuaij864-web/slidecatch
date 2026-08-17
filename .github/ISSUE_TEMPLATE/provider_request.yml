@@ -1,0 +1,58 @@
+name: Provider request
+description: Propose a platform adapter or generic-detector improvement.
+title: "[Provider]: "
+labels: [provider, enhancement, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Provider work must use public or synthetic evidence. Do not upload private courseware, credentials, or copied proprietary client code.
+  - type: input
+    id: platform
+    attributes:
+      label: Platform name
+    validations:
+      required: true
+  - type: input
+    id: public_url
+    attributes:
+      label: Public documentation or non-sensitive fixture URL
+      description: Leave blank when none exists; do not paste a signed/private URL.
+  - type: textarea
+    id: rendering
+    attributes:
+      label: How slides are rendered
+      description: Describe img/srcset/background/canvas/resource behavior and typical dimensions.
+    validations:
+      required: true
+  - type: textarea
+    id: patterns
+    attributes:
+      label: Sanitized patterns
+      description: Show host/path shapes with tokens and identifiers replaced.
+      placeholder: |
+        Page: https://slides.example.edu/course/<id>
+        Resource: https://cdn.example.edu/courseware/slides/<opaque>.jpg?<signature>
+    validations:
+      required: true
+  - type: textarea
+    id: page_numbers
+    attributes:
+      label: Page-number evidence
+      description: DOM attributes, visible labels, or safe filename patterns.
+  - type: textarea
+    id: permissions
+    attributes:
+      label: Minimum required host permissions
+      placeholder: https://slides.example.edu/* and https://cdn.example.edu/*
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundary confirmation
+      options:
+        - label: The requested adapter only processes resources already delivered to an authorized browser session.
+          required: true
+        - label: It does not require hidden-page enumeration, URL guessing, DRM bypass, or credential extraction.
+          required: true

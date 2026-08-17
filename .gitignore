@@ -1,0 +1,15 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+!docs/assets/cloud-validation-*.log
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.playwright/
+dist/
+dist-e2e/
+release/*
+!release/.gitkeep
+.vscode/
+.idea/

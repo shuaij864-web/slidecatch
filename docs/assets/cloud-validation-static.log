@@ -1,0 +1,119 @@
+
+up to date, audited 1 package in 161ms
+
+found 0 vulnerabilities
+
+> slidecatch@0.1.0 check
+> npm run lint && npm test && npm run build && npm run validate && npm run package && npm run verify:release
+
+
+> slidecatch@0.1.0 lint
+> node scripts/lint.mjs
+
+Static checks passed for 110 source and configuration files.
+
+> slidecatch@0.1.0 test
+> node --test tests/unit/*.test.mjs
+
+TAP version 13
+# Subtest: inline and canvas captures never persist page URLs or signed metadata
+ok 1 - inline and canvas captures never persist page URLs or signed metadata
+# Subtest: HTTP data-capture fallbacks retain only the provider-canonicalized URL
+ok 2 - HTTP data-capture fallbacks retain only the provider-canonicalized URL
+# Subtest: accepts a large 16:9 slide with slide URL
+ok 3 - accepts a large 16:9 slide with slide URL
+# Subtest: rejects small icons and tracker pixels
+ok 4 - rejects small icons and tracker pixels
+# Subtest: strong providers can admit resources whose dimensions are not yet known
+ok 5 - strong providers can admit resources whose dimensions are not yet known
+# Subtest: English and Simplified Chinese locales expose the same non-empty message keys
+ok 6 - English and Simplified Chinese locales expose the same non-empty message keys
+# Subtest: extracts Chinese and English page labels
+ok 7 - extracts Chinese and English page labels
+# Subtest: extracts page numbers from query strings and filenames
+ok 8 - extracts page numbers from query strings and filenames
+# Subtest: normalization and hint selection reject invalid values and choose confidence
+ok 9 - normalization and hint selection reject invalid values and choose confidence
+# Subtest: site enabling requires pre-approved host permissions and registers a scoped script
+ok 10 - site enabling requires pre-approved host permissions and registers a scoped script
+# Subtest: resource permission expansion is explicit and revocation removes unused origins
+ok 11 - resource permission expansion is explicit and revocation removes unused origins
+# Subtest: reconciliation deletes stale SlideCatch registrations without touching unrelated scripts
+ok 12 - reconciliation deletes stale SlideCatch registrations without touching unrelated scripts
+# Subtest: a saved site is not reported enabled after its page permission is revoked
+ok 13 - a saved site is not reported enabled after its page permission is revoked
+# Subtest: revoking a broad site keeps a grant that still covers a narrower enabled site
+ok 14 - revoking a broad site keeps a grant that still covers a narrower enabled site
+# Subtest: Yuketang adapter recognizes lesson sessions and signed slide URLs
+ok 15 - Yuketang adapter recognizes lesson sessions and signed slide URLs
+# Subtest: generic provider requests only the current origin by default
+ok 16 - generic provider requests only the current origin by default
+# Subtest: custom providers validate rules and extract page numbers
+ok 17 - custom providers validate rules and extract page numbers
+# Subtest: session registration updates page-derived titles but preserves explicit user renames
+ok 18 - session registration updates page-derived titles but preserves explicit user renames
+# Subtest: settings are bounded and unknown detection modes fall back safely
+ok 19 - settings are bounded and unknown detection modes fall back safely
+# Subtest: detection thresholds preserve strict > balanced > permissive ordering
+ok 20 - detection thresholds preserve strict > balanced > permissive ordering
+# Subtest: custom provider settings retain only bounded documented fields
+ok 21 - custom provider settings retain only bounded documented fields
+# Subtest: reports recognized and missing pages without inventing endpoints
+ok 22 - reports recognized and missing pages without inventing endpoints
+# Subtest: auto sort uses page numbers when recognition coverage is sufficient
+ok 23 - auto sort uses page numbers when recognition coverage is sufficient
+# Subtest: Chrome match patterns support subdomains, ports, and paths
+ok 24 - Chrome match patterns support subdomains, ports, and paths
+# Subtest: match patterns are sanitized conservatively
+ok 25 - match patterns are sanitized conservatively
+# Subtest: volatile signatures are removed without losing semantic page parameters
+ok 26 - volatile signatures are removed without losing semantic page parameters
+# Subtest: page URLs stored in sessions exclude credentials, query strings, and fragments
+ok 27 - page URLs stored in sessions exclude credentials, query strings, and fragments
+# Subtest: generic session paths collapse per-slide URL suffixes
+ok 28 - generic session paths collapse per-slide URL suffixes
+# Subtest: URL scoring separates slide-like resources from tracking assets
+ok 29 - URL scoring separates slide-like resources from tracking assets
+# Subtest: permission match-pattern coverage handles subdomain grants conservatively
+ok 30 - permission match-pattern coverage handles subdomain grants conservatively
+# Subtest: builds a standards-readable UTF-8 ZIP without third-party libraries
+ok 31 - builds a standards-readable UTF-8 ZIP without third-party libraries
+# Subtest: rejects unsafe traversal and drive-letter paths
+ok 32 - rejects unsafe traversal and drive-letter paths
+# Subtest: produces stable bytes when input data and timestamps are stable
+ok 33 - produces stable bytes when input data and timestamps are stable
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 235.581439
+
+> slidecatch@0.1.0 build
+> node scripts/build.mjs
+
+Built production extension at dist
+
+> slidecatch@0.1.0 validate
+> node scripts/validate.mjs
+
+Manifest, built syntax, files, permissions, CSP, locales, and remote-code policy validated.
+
+> slidecatch@0.1.0 package
+> node scripts/package.mjs
+
+<repo>/release/slidecatch-v0.1.0.zip
+
+> slidecatch@0.1.0 verify:release
+> node scripts/verify-release.mjs
+
+{
+  "archive": "release/slidecatch-v0.1.0.zip",
+  "bytes": 236029,
+  "entries": 18,
+  "version": "0.1.0",
+  "sha256": "df3e57b363992a864dcdb5aac6475593e8048b887370bf5883d54fffebf5c80f"
+}

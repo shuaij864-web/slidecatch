@@ -1,0 +1,37 @@
+{
+  "mode": "managed-cloud-browser-harness",
+  "browser": "Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)",
+  "builtBundlesExecuted": [
+    "content.js",
+    "popup.js"
+  ],
+  "capturedSlides": 5,
+  "recognizedPages": [
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "missingPages": [
+    3
+  ],
+  "sources": [
+    "background",
+    "image"
+  ],
+  "dynamicMutationObserved": true,
+  "duplicateSuppressed": true,
+  "permissionRevocationStopsCollector": true,
+  "screenshots": {
+    "content": "docs/assets/cloud-validation-content.png",
+    "popup": "docs/assets/cloud-validation-popup.png"
+  },
+  "consoleErrors": [],
+  "limitation": "The managed cloud Chromium blocks all URL navigation and unpacked extension installation; full unpacked-extension E2E is delegated to the included GitHub Actions workflow.",
+  "validatedAtEpoch": 1786934194,
+  "artifactSha256": {
+    "content": "b472169bd2263481c58c2f5b3fc1b481a22446db2b592c0ec7a972312288b9e4",
+    "popup": "aefcb143a2274d8e2f13d68e128f6bd4be3d348c29fd72056e0a5e5def0dbaf8"
+  }
+}

@@ -1,0 +1,72 @@
+name: Bug report
+description: Report a reproducible SlideCatch defect using non-sensitive data.
+title: "[Bug]: "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include cookies, access tokens, signed URLs, personally identifiable information, or private course materials.
+  - type: input
+    id: version
+    attributes:
+      label: SlideCatch version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 144 / Edge 144
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider/mode
+      options:
+        - Generic web
+        - Rain Classroom / Yuketang
+        - Custom provider rule
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Prefer a public or synthetic fixture.
+      placeholder: |
+        1. Load the extension...
+        2. Enable a test site...
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: Include sanitized console errors, detection mode, image dimensions, and whether the page/resource hosts were granted.
+      render: text
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed credentials, signed query values, private courseware, and personal information.
+          required: true
+        - label: The report does not request bypassing login, DRM, paywalls, or course permissions.
+          required: true

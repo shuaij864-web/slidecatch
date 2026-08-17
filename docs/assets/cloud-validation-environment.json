@@ -1,0 +1,28 @@
+{
+  "validatedAt": "2026-08-17",
+  "validatedAtEpoch": 1786934204,
+  "environment": "managed cloud Linux runtime",
+  "os": "Debian GNU/Linux 13 (trixie)",
+  "kernel": "Linux 6.18.35 x86_64",
+  "node": "v22.16.0",
+  "npm": "10.9.2",
+  "python": "3.13.5",
+  "playwright": "1.57.0",
+  "chromium": "144.0.7559.96",
+  "checks": {
+    "staticSourceAndConfigFiles": 110,
+    "unitTestsPassed": 33,
+    "unitTestsFailed": 0,
+    "npmAuditVulnerabilities": 0,
+    "releaseZipSha256": "df3e57b363992a864dcdb5aac6475593e8048b887370bf5883d54fffebf5c80f",
+    "browserHarnessPassed": true,
+    "fullUnpackedExtensionAttempted": true,
+    "fullUnpackedExtensionResult": "blocked-by-managed-browser-policy",
+    "fullUnpackedExtensionObservedFailure": "extension-origin navigation returned ERR_BLOCKED_BY_CLIENT; independent 10-second service-worker probe observed zero workers"
+  },
+  "policyBoundary": {
+    "urlNavigation": "blocked by managed URLBlocklist [\"*\"]",
+    "unpackedExtensionInstallation": "blocked by managed ExtensionInstallBlocklist [\"*\"]",
+    "bypassAttempted": false
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "slidecatch",
+  "version": "0.1.0",
+  "description": "A privacy-first Chrome extension for collecting slide images already loaded in the browser.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "node scripts/build.mjs",
+    "build:e2e": "node scripts/build.mjs --e2e",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --test tests/unit/*.test.mjs",
+    "test:e2e": "python tests/e2e/browser_harness.py",
+    "validate": "node scripts/validate.mjs",
+    "package": "node scripts/package.mjs",
+    "check": "npm run lint && npm test && npm run build && npm run validate && npm run package && npm run verify:release",
+    "test:extension": "python tests/e2e/extension_test.py",
+    "verify:release": "node scripts/verify-release.mjs"
+  },
+  "keywords": [
+    "chrome-extension",
+    "slides",
+    "courseware",
+    "presentation",
+    "yuketang",
+    "rain-classroom",
+    "local-first",
+    "manifest-v3"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/shuaij864-web/slidecatch#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shuaij864-web/slidecatch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shuaij864-web/slidecatch/issues"
+  },
+  "author": "SlideCatch contributors"
+}

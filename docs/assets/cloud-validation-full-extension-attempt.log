@@ -1,0 +1,57 @@
+
+> slidecatch@0.1.0 test:extension
+> python tests/e2e/extension_test.py
+
+Built E2E extension at dist-e2e
+Traceback (most recent call last):
+  File "<repo>/tests/e2e/extension_test.py", line 315, in <module>
+    main()
+    ~~~~^^
+  File "<repo>/tests/e2e/extension_test.py", line 141, in main
+    setup_page.goto(
+    ~~~~~~~~~~~~~~~^
+        f"chrome-extension://{extension_id}/options.html", wait_until="domcontentloaded"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 9050, in goto
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.goto(
+        ^^^^^^^^^^^^^^^^^^^^
+            url=url, timeout=timeout, waitUntil=wait_until, referer=referer
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_page.py", line 552, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_frame.py", line 153, in goto
+    await self._channel.send(
+        "goto", self._navigation_timeout, locals_to_params(locals())
+    )
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.goto: net::ERR_BLOCKED_BY_CLIENT at chrome-extension://<extension-id>/options.html
+Call log:
+  - navigating to "chrome-extension://<extension-id>/options.html", waiting until "domcontentloaded"
+
+Independent service-worker probe:
+- Waited 10 seconds for a Manifest V3 service worker.
+- Observed worker count: 0.
+
+Managed Chromium policy evidence:
+- ExtensionInstallBlocklist: ["*"]
+- URLBlocklist: ["*"]
+- Policy files were inspected only; no bypass or modification was attempted.
